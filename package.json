@@ -1,0 +1,28 @@
+{
+  "name": "safira",
+  "version": "1.0.0",
+  "description": "A High Productive UI-framework based on AngularJS and Bootstrap",
+  "main": "src/app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "karma run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dvbeato/safira.git"
+  },
+  "keywords": [
+    "AngularJS",
+    "Bootstrap",
+    "UI",
+    "Framework"
+  ],
+  "author": "@dvbeato",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/dvbeato/safira/issues"
+  },
+  "homepage": "https://github.com/dvbeato/safira"
+}

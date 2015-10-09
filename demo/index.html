@@ -1,0 +1,24 @@
+
+
+
+<sf-data-grid var="product" rest-data="/products">
+    <sf-col label="Name" value="product.name" />
+    <sf-col label="Price" value="product.price" sf-type="currency" />
+    <sf-col label="Valid" value="product.valid" sf-type="date" sf-format="dd/MM/yyyy" />
+    <sf-data-actions edit="vm.edit" remove="vm.remove">
+        <!-- extra actions -->
+    </sf-data-actions>
+</sf-data-grid>
+
+
+<sf-choose var="pessoa" rest-data="/pessoas" value="pessoa.pessoaKey" 
+	ng-model="pessoasSelecionadas">
+    <sf-col label="Name" value="pessoa.name" />
+</sf-choose>
+
+
+<sf-choose var="pessoa" rest-data="/pessoas" multiple value="pessoa.pessoaKey" ng-model="pessoasSelecionadas">
+    <sf-col label="Name" value="pessoa.name" />
+</sf-choose>
+
+
