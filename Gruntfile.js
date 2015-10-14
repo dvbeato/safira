@@ -26,9 +26,19 @@ module.exports = function(grunt) {
         browserify: {
             'dist/safira.js': 'src/safira-module.js'
         },
+        karma: {
+            options: {
+                singleRun: true
+            },
+            unit: {
+                configFile: 'karma.conf.js'
+            }
+        },
         watch: {
-            files: ['<%= jshint.files %>'],
-            tasks: ['lint']
+            files: ['<%= jshint.files %>',
+                    'src/directives/templates/**/*.html'
+            ],
+            tasks: ['test']
         },
         html2js: {
             options: {
@@ -55,11 +65,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-jscs');
+    grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-html2js');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-browserify');
 
-    grunt.registerTask('build', ['browserify', 'uglify:main']);
+    grunt.registerTask('build', ['html2js:main', 'browserify', 'uglify:main']);
+    grunt.registerTask('test', ['build', 'lint', 'karma:unit']);
     grunt.registerTask('lint', ['jshint', 'jscs']);
-    grunt.registerTask('server', ['lint', 'watch']);
+    grunt.registerTask('server', ['test', 'watch']);
 };

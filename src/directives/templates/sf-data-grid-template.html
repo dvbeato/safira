@@ -8,13 +8,17 @@
         </thead>
         <tbody>
             <tr ng-repeat="item in data">
-                <td ng-repeat="col in cols">
-                    {{ item[col.value] }}
+                <td ng-repeat="col in cols" ng-class="col.ngClass">
+                    {{ render(item[col.value], col) }}
                 </td>
             </tr>
         </tbody>
         <tfoot>
-
+            <tr>
+                <td ng-repeat="col in cols">
+                    {{ col.totalized ? totalize(col) : ''}}
+                </td>
+            </tr>
         </tfoot>
     </table>
 </div>

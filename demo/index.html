@@ -34,8 +34,8 @@
 
 <sf-data-grid data="products">
     <sf-col label="Name" value="name" ></sf-col>
-    <sf-col label="Price" value="price" sf-type="currency" totalized ></sf-col>
-    <sf-col label="Valid" value="valid" sf-type="date" sf-format="dd/MM/yyyy" ></sf-col>
+    <sf-col label="Price" value="price" ng-class="price > 0 ? 'text-success':'text-danger'" filter="currency" totalized ="totalized"></sf-col>
+    <sf-col label="Valid" value="valid" filter="date" format="dd/MM/yyyy" ></sf-col>
     <sf-data-actions edit="vm.edit" remove="vm.remove">
         <!-- extra actions -->
     </sf-data-actions>
@@ -77,7 +77,7 @@
     <script type="text/javascript" src="/node_modules/highlightjs/highlight.pack.min.js" ></script>
     <script>
         $('.live-code').each(function() {
-            $('#code').append(
+            $(this).parents('.tab-content').find('#code').append(
             $('<pre></pre>').append(
                 $('<code class="html"></code>').text(
                     $(this).html().trim()

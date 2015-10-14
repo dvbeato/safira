@@ -79,7 +79,11 @@ function sfCol() {
         replace: true,
         scope: {
             label: '@',
-            value: '@'
+            value: '@',
+            filter: '@',
+            format: '@',
+            totalized: '@',
+            ngClass: '='
         },
         require: '^sfDataGrid',
         link: function(scope, element, attrs, sfDataGridCtrl) {
@@ -93,20 +97,36 @@ angular.module('safira')
 
 },{}],7:[function(require,module,exports){
 
-function SfDataGridCtrl($scope) {
+
+function sfDataGridCtrl($scope, $filter) {
     var cols = $scope.cols = [];
 
     this.addCol = function(col) {
         cols.push(col);
     };
+
+    $scope.render = function(value, col) {
+        value = col.filter ? $filter(col.filter)(value, col.format) : value;
+        return value;
+    };
+
+    $scope.totalize = function(col) {
+        var sum = $scope.data
+            .map(function(item) { return item[col.value]; })
+            .reduce(function(p, n) { return p + n; });
+
+        return $scope.render(sum, col);
+    };
 }
+
+sfDataGridCtrl.$inject = ['$scope', '$filter'];
 
 function sfDataGrid() {
     return {
         restrict: 'E',
         replace: true,
         templateUrl: 'templates/sf-data-grid-template.html',
-        controller: SfDataGridCtrl,
+        controller: sfDataGridCtrl,
         transclude: true,
         scope: {
             data: '='
@@ -126,15 +146,16 @@ angular.module('safira', ['safira-templates']);
 require('automail');
 require('./safira-templates.js');
 require('./safira-app.js');
-require('./directives/sf-col.js');
 require('./directives/sf-data-grid.js');
+require('./directives/sf-col.js');
+
 
 },{"./directives/sf-col.js":6,"./directives/sf-data-grid.js":7,"./safira-app.js":8,"./safira-templates.js":10,"automail":2}],10:[function(require,module,exports){
 angular.module('safira-templates', ['templates/sf-data-grid-template.html']);
 
 angular.module("templates/sf-data-grid-template.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/sf-data-grid-template.html",
-    "<div class=sf-data-grid><div class=sf-cols ng-transclude></div><table class=\"table table-striped\"><thead><tr><th ng-repeat=\"col in cols\">{{col.label}}</th></tr></thead><tbody><tr ng-repeat=\"item in data\"><td ng-repeat=\"col in cols\">{{ item[col.value] }}</td></tr></tbody><tfoot></tfoot></table></div>");
+    "<div class=sf-data-grid><div class=sf-cols ng-transclude></div><table class=\"table table-striped\"><thead><tr><th ng-repeat=\"col in cols\">{{col.label}}</th></tr></thead><tbody><tr ng-repeat=\"item in data\"><td ng-repeat=\"col in cols\" ng-class=col.ngClass>{{ render(item[col.value], col) }}</td></tr></tbody><tfoot><tr><td ng-repeat=\"col in cols\">{{ col.totalized ? totalize(col) : ''}}</td></tr></tfoot></table></div>");
 }]);
 
 },{}]},{},[9]);

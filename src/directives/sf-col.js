@@ -5,7 +5,11 @@ function sfCol() {
         replace: true,
         scope: {
             label: '@',
-            value: '@'
+            value: '@',
+            filter: '@',
+            format: '@',
+            totalized: '@',
+            ngClass: '='
         },
         require: '^sfDataGrid',
         link: function(scope, element, attrs, sfDataGridCtrl) {
