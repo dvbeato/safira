@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="safira-demo">
+<head>
+	<meta charset="UTF-8">
+	<title>Safira Demo Usage</title>
+	<link rel="stylesheet" href="./vendors/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./vendors/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="./vendors/highlightjs/styles/github.css">
+    <style>
+        .hljs {
+            background:none;
+        }
+    </style>
+</head>
+<body class="container" ng-controller="DemoCtrl">
+<h1>Safira Demo</h1>
+
+<h4>Data Grid</h4>
+<div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+        <a href="#component" role="tab" data-toggle="tab">Component</a>
+    </li>
+    <li role="presentation">
+        <a href="#code" role="tab" data-toggle="tab">Code</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="component">
+<div class="live-code">
+
+<sf-data-grid data="products">
+    <sf-col label="Name" value="name" ></sf-col>
+    <sf-col label="Price" value="price" ng-class="price > 0 ? 'text-success':'text-danger'" filter="currency" totalized ="totalized"></sf-col>
+    <sf-col label="Valid" value="valid" filter="date" format="dd/MM/yyyy" ></sf-col>
+    <sf-data-actions edit="vm.edit" remove="vm.remove">
+        <!-- extra actions -->
+    </sf-data-actions>
+</sf-data-grid>
+
+</div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="code"></div>
+  </div>
+
+</div>
+
+
+
+<h4>Choose</h4>
+
+<div class="highlight">
+<pre><code class="html">
+<sf-choose var="pessoa" rest-data="/pessoas" value="pessoa.pessoaKey"
+	ng-model="pessoasSelecionadas">
+    <sf-col label="Name" value="pessoa.name"></sf-col>
+</sf-choose>
+</code></pre>
+</div>
+
+
+<h4>Multiple Choose</h4>
+
+<div class="highlight">
+<pre><code class="html">
+<sf-choose var="pessoa" rest-data="/pessoas" multiple value="pessoa.pessoaKey" ng-model="pessoasSelecionadas">
+    <sf-col label="Name" value="pessoa.name"></sf-col>
+</sf-choose>
+</code></pre>
+</div>
+
+
+	<script type="text/javascript" src="./vendors/jquery/dist/jquery.min.js" ></script>
+    <script type="text/javascript" src="./vendors/highlightjs/highlight.pack.min.js" ></script>
+    <script>
+        $('.live-code').each(function() {
+            $(this).parents('.tab-content').find('#code').append(
+            $('<pre></pre>').append(
+                $('<code class="html"></code>').text(
+                    $(this).html().trim()
+                )
+            ));
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+	<script type="text/javascript" src="./vendors/bootstrap/dist/js/bootstrap.min.js" ></script>
+	<script type="text/javascript" src="./vendors/angular/angular.min.js" ></script>
+    <script type="text/javascript" src="./dist/safira.js" ></script>
+    <script type="text/javascript" src="demo-controller.js" ></script>
+
+
+</body>
+</html>
+
+
